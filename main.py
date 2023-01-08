@@ -15,7 +15,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 
 auth = firebase.auth()
-user = auth.sign_in_with_email_and_password("jesiel.bv@gmail.com", 'teste123')
+user = auth.sign_in_with_email_and_password("jesiel364@gmail.com", '12345678')
 
 db = firebase.database()
 
@@ -49,8 +49,31 @@ if menu == '1':
 	
 	
 	db.child('Sunfyer - DAW Projects').child('Projects').child(daw).push(data, user['idToken'])
-	print(f'Projeto criado com sucesso✓')
-	
+	print(f'Projeto criado com sucesso ✓')
+
+elif menu == '2':
+	print('Fazer Login\n')
+	user_email = input('Email: ')
+	user_p = input('Senha: ')
+	try:
+		user = auth.sign_in_with_email_and_password(user_email, user_p)
+		info = auth.get_account_info(user['idToken'])
+		auth.send_email_verification(user['idToken'])
+		print(info)
+		print('Usuário Logado ✓')
+	except:
+		print('Email ou senha não encontrados!')
+
+elif menu == '3':
+	print('Criar Conta\n')
+	user_n = input('Nome de Usuário: ')
+	user_email = input('Email: ')
+	user_p = input('Senha: ')
+	try:
+		auth.create_user_with_email_and_password(user_email, user_p)
+		print('Conta criada com sucesso ✓')
+	except:
+		print('Algo deu errado!')
 	
 	
 elif menu == '4':
